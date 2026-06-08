@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+
+# Data and Logs
+logs/
+dataset/raw_data/*.csv
+dataset/processed_data/*.csv
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Excluded local scripts
+live_monitor.py
