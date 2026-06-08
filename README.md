@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="dashboard/logo.png" width="128" />
+</p>
+
 # CyberNexus: Multi-Agent Cybersecurity Threat Detection System
 
 **Live Demo**: [cybernexus.streamlit.app](https://cybernexus.streamlit.app/)

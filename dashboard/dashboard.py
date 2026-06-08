@@ -853,6 +853,40 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 st.markdown("---")
 
+# ── THREAT SPIKE CHART ───────────────────────────────────────
+st.markdown("### Threat activity")
+hist  = list(st.session_state.spike_history)
+times = [h["time"] for h in hist]
+news  = [h["new"]  for h in hist]
+
+fig_spike = go.Figure()
+fig_spike.add_trace(go.Scatter(
+    x=times, y=news, mode="lines+markers",
+    name="New threats",
+    line=dict(color="#6366f1", width=2.5, shape="spline"),
+    marker=dict(size=4, color="#6366f1"),
+    fill="tozeroy", fillcolor="rgba(99,102,241,0.08)",
+))
+if news:
+    avg = sum(news) / max(len(news), 1)
+    sx = [times[i] for i in range(len(news)) if news[i] > max(avg * 1.8, 2)]
+    sy = [news[i]  for i in range(len(news)) if news[i] > max(avg * 1.8, 2)]
+    if sx:
+        fig_spike.add_trace(go.Scatter(
+            x=sx, y=sy, mode="markers", name="Spike",
+            marker=dict(color="#ef4444", size=10, symbol="diamond", line=dict(color="#0b1120", width=2)),
+        ))
+fig_spike.update_layout(
+    paper_bgcolor="#0b1120", plot_bgcolor="#0b1120",
+    font=dict(color="#94a3b8", family="Inter"),
+    xaxis=dict(gridcolor="#1e293b", showgrid=True, title="", zeroline=False),
+    yaxis=dict(gridcolor="#1e293b", showgrid=True, title="", rangemode="tozero", zeroline=False),
+    legend=dict(font=dict(color="#94a3b8"), orientation="h", y=1.1),
+    margin=dict(t=10, b=30, l=50, r=20), height=380, hovermode="x unified",
+)
+st.plotly_chart(fig_spike, use_container_width=True)
+st.markdown("---")
+
 # ═══════════════════════════════════════════════════════════════
 # ██  AGENT COLLABORATION PIPELINE + THREAT INTELLIGENCE MAP ██
 # ═══════════════════════════════════════════════════════════════
@@ -993,39 +1027,6 @@ table_html += "</tbody></table></div>"
 st.markdown(table_html, unsafe_allow_html=True)
 st.markdown("---")
 
-# ── THREAT SPIKE CHART ───────────────────────────────────────
-st.markdown("### Threat activity")
-hist  = list(st.session_state.spike_history)
-times = [h["time"] for h in hist]
-news  = [h["new"]  for h in hist]
-
-fig_spike = go.Figure()
-fig_spike.add_trace(go.Scatter(
-    x=times, y=news, mode="lines+markers",
-    name="New threats",
-    line=dict(color="#6366f1", width=2.5, shape="spline"),
-    marker=dict(size=4, color="#6366f1"),
-    fill="tozeroy", fillcolor="rgba(99,102,241,0.08)",
-))
-if news:
-    avg = sum(news) / max(len(news), 1)
-    sx = [times[i] for i in range(len(news)) if news[i] > max(avg * 1.8, 2)]
-    sy = [news[i]  for i in range(len(news)) if news[i] > max(avg * 1.8, 2)]
-    if sx:
-        fig_spike.add_trace(go.Scatter(
-            x=sx, y=sy, mode="markers", name="Spike",
-            marker=dict(color="#ef4444", size=10, symbol="diamond", line=dict(color="#0b1120", width=2)),
-        ))
-fig_spike.update_layout(
-    paper_bgcolor="#0b1120", plot_bgcolor="#0b1120",
-    font=dict(color="#94a3b8", family="Inter"),
-    xaxis=dict(gridcolor="#1e293b", showgrid=True, title="", zeroline=False),
-    yaxis=dict(gridcolor="#1e293b", showgrid=True, title="", rangemode="tozero", zeroline=False),
-    legend=dict(font=dict(color="#94a3b8"), orientation="h", y=1.1),
-    margin=dict(t=10, b=30, l=50, r=20), height=380, hovermode="x unified",
-)
-st.plotly_chart(fig_spike, use_container_width=True)
-st.markdown("---")
 
 # ── CHARTS ROW 1: Pie + Timeline ─────────────────────────────
 col_a, col_b = st.columns([2, 3])
