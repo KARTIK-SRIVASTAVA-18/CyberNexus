@@ -149,7 +149,18 @@ if st.session_state.auto_inject:
 
 df_all = load_data()
 if df_all.empty:
-    st.warning("No threat reports found. Start the Auto-Injector or run the Detection Pipeline.")
+    st.markdown("""
+    <div style="background-color: #0a1929; border: 1px solid #1a3a5c; border-left: 5px solid #00e5ff; padding: 20px; border-radius: 8px;">
+        <h3 style="color: #00e5ff; margin-top: 0;">Welcome to CyberNexus! 🛡️</h3>
+        <p style="font-size: 1.1rem; color: #c8d8e8;">
+            Right now, the system is quiet and no cyber threats have been detected.<br><br>
+            To see the AI in action, look at the sidebar on the left and click the <b>"▶️ Enable Interception"</b> toggle. 
+            <br><br>
+            <b>What does this do?</b><br>
+            It will simulate a live network connection, allowing our 5 AI Agents to instantly start catching, analyzing, and blocking hacker attacks (like DDoS and Malware) in real-time!
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     if st.session_state.auto_inject:
         time.sleep(refresh_rate)
         st.rerun()
