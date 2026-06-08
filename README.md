@@ -1,5 +1,7 @@
 # CyberNexus: Multi-Agent Cybersecurity Threat Detection System
 
+**Live Demo**: [cybernexus.streamlit.app](https://cybernexus.streamlit.app/)
+
 A fully functional, end-to-end intelligent cybersecurity system where **five autonomous AI agents** collaborate to detect, classify, respond to, and report on network-based cyber threats.
 
 ---
@@ -189,16 +191,18 @@ python main.py --retrain
 
 ## Dashboard Features
 
-| Panel | Description |
-|-------|-------------|
-| KPI Cards | Total incidents, critical/high count, unique IPs, DDoS events |
-| Attack Distribution | Interactive pie chart by attack type |
-| Threat Timeline | Line chart showing attack frequency over time |
-| Severity Bar Chart | CRITICAL / HIGH / MEDIUM / INFO breakdown |
-| Protocol Breakdown | TCP / UDP / ICMP distribution |
-| Incident Table | Sortable, filterable log of recent threats |
-| Top Offending IPs | Ranked by incident count |
-| Raw Log Viewer | Last 100 lines of system_logs.txt |
+The dashboard operates as a professional Security Operations Center (SOC) interface featuring:
+
+| Feature | Description |
+|---------|-------------|
+| **Top Command Bar** | Live system status, active agents, and calculated threat level. |
+| **KPI Metric Cards** | High-level overview of detected threats, critical alerts, and protected systems. |
+| **Agent Collaboration Pipeline** | Visual step-by-step pipeline showing real-time actions taken by all 5 agents. |
+| **Attack Source Geo Map** | Interactive 3D globe visualizing where attacks are originating globally. |
+| **Agent Status Table** | Authentic metrics showing exact processing time (ms) and records processed per agent. |
+| **Threat Timeline** | Vertical feed tracking the exact timestamp, attack type, and response action. |
+| **Spike Analysis Chart** | Real-time graph showing spikes in detected threats over the last 60 seconds. |
+| **Attack Breakdown** | Interactive donut charts and protocol distributions. |
 
 ---
 
