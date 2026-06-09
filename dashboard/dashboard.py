@@ -7,6 +7,9 @@
 import os, sys, time, datetime, json, random, hashlib, base64
 from collections import deque
 
+# ── Timezone: force Indian Standard Time (UTC+5:30) ─────────
+IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
+
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -736,7 +739,7 @@ if "attack_type" in df.columns: df = df[df["attack_type"].isin(attack_filter + [
 current_total = len(df_all)
 new_this_tick = max(0, current_total - st.session_state.prev_total)
 st.session_state.spike_history.append({
-    "time": datetime.datetime.now().strftime("%H:%M:%S"),
+    "time": datetime.datetime.now(IST).strftime("%H:%M:%S"),
     "new": new_this_tick,
     "total": current_total,
 })
@@ -759,7 +762,7 @@ else:
 # ═══════════════════════════════════════════════════════════════
 sys_status = "ACTIVE" if st.session_state.auto_inject else "STANDBY"
 sys_color  = "val-green" if st.session_state.auto_inject else "val-blue"
-now_str    = datetime.datetime.now().strftime("%H:%M:%S")
+now_str    = datetime.datetime.now(IST).strftime("%H:%M:%S")
 
 # Load logo for header
 logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo.png")
@@ -992,7 +995,7 @@ st.markdown("### Agent Status")
 pinfo = st.session_state.last_pipeline_info
 status_lbl = "Online" if st.session_state.auto_inject else "Idle"
 status_cls = "agent-online" if st.session_state.auto_inject else "agent-idle"
-now_time   = datetime.datetime.now().strftime("%H:%M:%S")
+now_time   = datetime.datetime.now(IST).strftime("%H:%M:%S")
 
 table_html = """
 <div style='background:#111827;border:1px solid #1e293b;border-radius:8px;padding:4px;overflow-x:auto;'>
@@ -1276,6 +1279,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ── AUTO-REFRESH ─────────────────────────────────────────────
-time.sleep(refresh_rate)
-st.rerun()
+# ── AUTO-REFRESH (only when interception is active) ──────────
+if st.session_state.auto_inject:
+    time.sleep(refresh_rate)
+    st.rerun()
