@@ -812,48 +812,50 @@ malware_count   = len(df[df["attack_type"]=="malware"])  if "attack_type" in df.
 
 delta_html = f"<div class='cn-kpi-delta'>+{new_this_tick} new</div>" if new_this_tick else ""
 
-st.markdown(f"""
-<div class='cn-kpi-row'>
-    <div class='cn-kpi-card'>
+kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
+with kpi1:
+    st.markdown(f"""<div class='cn-kpi-card'>
         <div class='cn-kpi-icon kpi-red'>&#9888;</div>
         <div>
             <div class='cn-kpi-label'>Threats Detected</div>
             <div class='cn-kpi-value'>{total_incidents}</div>
             {delta_html}
         </div>
-    </div>
-    <div class='cn-kpi-card'>
+    </div>""", unsafe_allow_html=True)
+with kpi2:
+    st.markdown(f"""<div class='cn-kpi-card'>
         <div class='cn-kpi-icon kpi-green'>&#9881;</div>
         <div>
             <div class='cn-kpi-label'>Agents Running</div>
             <div class='cn-kpi-value'>5 / 5</div>
             <div class='cn-kpi-delta' style='color:#4ade80;'>All operational</div>
         </div>
-    </div>
-    <div class='cn-kpi-card'>
+    </div>""", unsafe_allow_html=True)
+with kpi3:
+    st.markdown(f"""<div class='cn-kpi-card'>
         <div class='cn-kpi-icon kpi-amber'>&#9650;</div>
         <div>
             <div class='cn-kpi-label'>Critical Alerts</div>
             <div class='cn-kpi-value'>{critical_count}</div>
         </div>
-    </div>
-    <div class='cn-kpi-card'>
+    </div>""", unsafe_allow_html=True)
+with kpi4:
+    st.markdown(f"""<div class='cn-kpi-card'>
         <div class='cn-kpi-icon kpi-blue'>&#9741;</div>
         <div>
             <div class='cn-kpi-label'>Unique IPs</div>
             <div class='cn-kpi-value'>{unique_ips}</div>
         </div>
-    </div>
-    <div class='cn-kpi-card'>
+    </div>""", unsafe_allow_html=True)
+with kpi5:
+    st.markdown(f"""<div class='cn-kpi-card'>
         <div class='cn-kpi-icon kpi-purple'>&#9878;</div>
         <div>
             <div class='cn-kpi-label'>Systems Protected</div>
             <div class='cn-kpi-value'>{ddos_count + malware_count + critical_count}</div>
             <div class='cn-kpi-delta' style='color:#a78bfa;'>Active defense</div>
         </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 st.markdown("---")
 
 # ── THREAT SPIKE CHART ───────────────────────────────────────
